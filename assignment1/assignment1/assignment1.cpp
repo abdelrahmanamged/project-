@@ -58,6 +58,97 @@ void save_image(Image& current_image,string & original_filename)
             
     }
 }
+void black_white(Image& current_image)
+{
+    cout << "===========\n" << "filter: black and white\n" << "===========\n";
+    for (int i = 0; i < current_image.width; i++)
+    {
+        for (int j = 0; j < current_image.height; j++)
+        {
+            int avg = (current_image(i, j, 0) + current_image(i, j, 1) + current_image(i, j, 2)) / 3;
+            if (avg >= 128)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    current_image(i, j, k) = 255;
+                }
+            }
+            else
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    current_image(i, j, k) = 0;
+                }
+            }
+
+        }
+
+    }
+    cout << "Black and White filter applied successfully!\n";
+}
+void Rotate_Image(Image& current_image)
+{
+    int choice;
+    int w, h;
+    w = current_image.width;
+    h = current_image.height;
+    cout << "===========\n" << "filter: Rotate_Image \n" << "===========\n";
+    cout << "Please select the rotation angle :\n";
+    cout << "enter [1] for rotate 90\n";
+    cout << "enter [2] for rotate 180\n";
+    cout << "enter [3] for rotate 270\n";
+    cout << "enter your choice\n";
+    cin >> choice;
+    if (choice == 1)
+    {
+        Image rotated_image(h,w);
+        for (int i = 0; i < current_image.width; i++)
+        {
+            for (int j = 0; j < current_image.height; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    rotated_image(h - 1 - j, i, k) = current_image(i, j, k);
+                }
+            }
+        }
+        current_image = rotated_image;
+        cout << "image roated 90 successfully\n";
+    }
+    if (choice == 2)
+    {
+        Image rotated_image(w,h);
+        for (int i = 0; i < current_image.width; i++)
+        {
+            for (int j = 0; j < current_image.height; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    rotated_image(w-1-i,h-1-j , k) = current_image(i, j, k);
+                }
+            }
+        }
+        current_image = rotated_image;
+        cout << "image roated 180 successfully\n";
+    }
+    if (choice == 3)
+    {
+        Image rotated_image(h, w);
+        for (int i = 0; i < current_image.width; i++)
+        {
+            for (int j = 0; j < current_image.height; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    rotated_image(j, w-1-i, k) = current_image(i, j, k);
+                }
+            }
+        }
+        current_image = rotated_image;
+        cout << "image roated 270 successfully\n";
+    }
+
+}
 
  int main() 
  {
@@ -95,6 +186,10 @@ void save_image(Image& current_image,string & original_filename)
              }
              
          }
+         if (choice == 3) // black and white filter
+         {
+             black_white(current_image);
+         }
          if (choice == 10) //save
          {
              cout << "===========\n"<<"save option\n"<<"===========\n";
@@ -107,7 +202,13 @@ void save_image(Image& current_image,string & original_filename)
              cout << "original image restored successfull\n";
 
          }
+         if (choice == 7) //rotate image 
+         {
+             Rotate_Image(current_image);
+      }
+       
      }
+    
     
 }
 
