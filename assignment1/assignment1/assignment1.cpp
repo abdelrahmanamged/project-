@@ -190,6 +190,13 @@ void Rotate_Image(Image& current_image)
          {
              black_white(current_image);
          }
+        
+
+         if (choice == 7) //rotate image 
+         {
+             Rotate_Image(current_image);
+         }
+        
          if (choice == 10) //save
          {
              cout << "===========\n"<<"save option\n"<<"===========\n";
@@ -202,10 +209,7 @@ void Rotate_Image(Image& current_image)
              cout << "original image restored successfull\n";
 
          }
-         if (choice == 7) //rotate image 
-         {
-             Rotate_Image(current_image);
-      }
+         
        
      }
     
