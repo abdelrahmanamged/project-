@@ -150,6 +150,93 @@ void Rotate_Image(Image& current_image)
 
 }
 
+void apply_framefilter(Image& img){
+    int frametype;
+    cout << "*---Choose Frame Type---* \n";
+    cout << "1. Simple Frame \n";
+    cout << "2. Fancy Frame \n";
+    cin >> frametype;
+    int frame_size;
+    cout << "Enter Frame Size : \n";
+    cin >> frame_size;
+    if(frametype == 1){
+    int r , g ,b;
+    cout << "Enter Frame Color (R G B values from 0 to 255): \n";
+    cin >> r >> g >> b;
+        for ( int i = 0; i < img.width; i++){
+            for(int j = 0; j < img.height; j++){
+                if (i < frame_size || i >= img.width-frame_size || j < frame_size || j >= img.height-frame_size){
+                    img(i,j,0)=r;
+                    img(i,j,1)=g;
+                    img(i,j,2)=b;
+                }
+            }
+        }
+    }
+    else if (frametype == 2){
+            int r1,g1,b1,r2,g2,b2;
+            cout << "Enter First color (Pattern) (R G B values from 0 to 255): \n";
+            cin >> r1 >> g1 >> b1;
+            cout << "Enter Second Color(Background of Pattern) (R G B values from 0 to 255): \n";
+            cin >> r2 >> g2 >> b2;
+            int square_size=20;
+            int pattern_type;
+            cout << "*---Choose pattern type:---* \n";
+            cout << "1. Checkers / Squares patterns \n";
+            cout << "2.Diamond pattern  \n";
+            cin >> pattern_type;
+            int diamound_size = 20;
+            
+            for ( int i = 0; i < img.width; i++){
+                for(int j = 0; j < img.height; j++){
+                    if (i < frame_size || i >= img.width-frame_size || j < frame_size || j >= img.height-frame_size){
+                        bool apply_first_color = false;
+                        if (pattern_type == 1){
+                            if((i / square_size + j / square_size) % 2 == 0){
+                                apply_first_color = true;
+                            }
+                        }else if (pattern_type == 2){
+                            if(((i+j)/diamound_size) % 2 ==0){
+                                 apply_first_color = true;
+                        }    
+                    }
+                        if(apply_first_color){
+                            img(i,j,0)=r1;
+                            img(i,j,1)=g1;
+                            img(i,j,2)=b1;
+                        }else{
+                            img(i,j,0)=r2;
+                            img(i,j,1)=g2;
+                            img(i,j,2)=b2;
+                               
+                        }
+                        
+                    }
+                }
+            }
+    }
+    cout << "Frame filter applied successfully!\n";
+}
+void apply_resize_image_filter(Image& img){
+    int new_width , new_height;
+    cout << "Enter New Width and Height: \n";
+    cin >> new_width >> new_height;
+    Image new_img(new_width,new_height);
+    double x_ratio = (double)img.width / new_width;
+    double y_ratio =(double)img.height / new_height;
+    for(int i = 0; i < new_width; i++){
+        for(int j = 0 ; j < new_height; j++){
+            int old_i = i * x_ratio;
+            int old_j = j * y_ratio;
+            new_img(i,j,0) = img(old_i,old_j,0);
+            new_img(i,j,1) = img(old_i,old_j,1);
+            new_img(i,j,2) = img(old_i,old_j,2);
+        }
+    }
+    img = new_img;
+    cout << "Resize filter applied successfully!\n";
+}
+
  int main() 
  {
      Image current_image;
@@ -190,6 +277,14 @@ void Rotate_Image(Image& current_image)
          {
              black_white(current_image);
          }
+        if (choice == 4) // frame filter
+        {
+            apply_framefilter(current_image);
+        }
+        if (choice == 8) // resize filter
+        {
+            apply_resize_image_filter(current_image);
+        }
         
 
          if (choice == 7) //rotate image 
