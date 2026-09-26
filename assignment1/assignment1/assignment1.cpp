@@ -58,6 +58,57 @@ void save_image(Image& current_image,string & original_filename)
             
     }
 }
+void Darken_or_lighten_image(Image& current_image) {
+    cout << "Do you want to darken or lighten the image?\nEnter 0 to darken or 1 to lighten.\n→ ";
+    bool dark_or_light_choice = 0;
+    cin >> dark_or_light_choice; // take the input from the user
+    if (dark_or_light_choice) { // i.e. the user chose lighten
+        cout << "On a scale of 0 to 100, what is the level of lightening do you wish for? (in percents)\n(0 means no change and 100 means double the lightening)\n→ ";
+        int level = 0;
+        while (true) {
+            cin >> level;
+            if (level >= 0 && level <= 100) break;
+            else cout << "Please enter a valid level. No negative numbers. The maximum is 100\n";
+        }
+        for (int x = 0; x < current_image.width; x++) {
+            for (int y = 0; y < current_image.height; y++) {
+                for (int c = 0; c < 3; c++) {
+                    current_image(x, y, c) *= (1 + level / 100.0); // current_image + (level / 100 * current_image)
+                    if (current_image(x, y, c) > 255) current_image(x, y, c) = 255;
+                }
+            }
+        }
+        cout << "The image has been lightened by " << level << "% successfully.\n";
+    }
+    else { // i.e. dark_or_light_choice = 0 which means the user chose to darken it.
+        cout << "On a scale of 0 to 100, what is the level of darkening do you wish for? (in percents)\n(0 means no change and 100 means double the darkening)\n→ ";
+        int level = 0;
+        while (true) {
+            cin >> level;
+            if (level >= 0 && level <= 100) break;
+            else cout << "Please enter a valid level. No negative numbers. The maximum is 100\n";
+        }
+        for (int x = 0; x < current_image.width; x++) {
+            for (int y = 0; y < current_image.height; y++) {
+                for (int c = 0; c < 3; c++) {
+                    current_image(x, y, c) *= (1 - level / 100.0); // current_image - (level / 100 * current_image)
+                    if (current_image(x, y, c) < 0) current_image(x, y, c) = 0;
+                }
+            }
+        }
+        cout << "The image has been darkened by " << level << "% successfully.\n";
+    }
+}
+void invert_image(Image& current_image) {
+    for (int x = 0; x < current_image.width; x++) {
+        for (int y = 0; y < current_image.height; y++) {
+            for (int c = 0; c < 3; c++) { // c++ lol
+                current_image(x, y, c) = 255 - current_image(x, y, c);
+            }
+        }
+    }
+    cout << "Inversion Filter has successfully been applied.\n";
+}
 void black_white(Image& current_image)
 {
     cout << "===========\n" << "filter: black and white\n" << "===========\n";
@@ -167,7 +218,7 @@ void Rotate_Image(Image& current_image)
              cout << "program is ended"<<"\n";
              break;
          }
-         if (choice ==1 ) //load
+         else if (choice ==1 ) //load
          {
              cout << "===========\n" << "load option\n" << "===========\n";
 
@@ -186,23 +237,29 @@ void Rotate_Image(Image& current_image)
              }
              
          }
-         if (choice == 3) // black and white filter
+         else if (choice == 3) // black and white filter
          {
              black_white(current_image);
          }
-         if (choice == 10) //save
+         else if (choice == 4) { // Apply the Image Inversion Filter
+             invert_image(current_image);
+         }
+         else if (choice == 7) { // Apply the Darken/Lighten Filter
+             Darken_or_lighten_image(current_image);
+         }
+         else if (choice == 10) //save
          {
              cout << "===========\n"<<"save option\n"<<"===========\n";
              save_image(current_image, file_name);
          }
-         if (choice == 11) // reset
+         else if (choice == 11) // reset
          {
              cout << "===========\n" << "reset option\n" << "===========\n";
              current_image = original_image;
              cout << "original image restored successfull\n";
 
          }
-         if (choice == 7) //rotate image 
+         else if (choice == 7) //rotate image 
          {
              Rotate_Image(current_image);
       }
