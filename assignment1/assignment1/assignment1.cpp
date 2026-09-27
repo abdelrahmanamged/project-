@@ -24,7 +24,7 @@ void show_menu()
     cout << "======================================================\n";
     cout << "Enter your choice: ";
 }
-void save_image(Image &current_image, string &original_filename)
+void save_image(Image& current_image, string& original_filename)
 {
     cout << "If you want to save  in same file enter 1" << "\n";
     cout << "If you want to save  in new file enter 2\n";
@@ -53,12 +53,12 @@ void save_image(Image &current_image, string &original_filename)
         }
         else
         {
-
             cout << "Image failed to save to " << new_filename << " please try again" << "\n";
         }
     }
 }
-void Darken_or_lighten_image(Image &current_image)
+//*************************************Hesham****************************************************************//
+void Darken_or_lighten_image(Image& current_image)
 {
     cout << "Do you want to darken or lighten the image?\nEnter 0 to darken or 1 to lighten.\n→ ";
     bool dark_or_light_choice = 0;
@@ -116,9 +116,24 @@ void Darken_or_lighten_image(Image &current_image)
         cout << "The image has been darkened by " << level << "% successfully.\n";
     }
 }
-void Grayscale_Conversion(Image &image)
+void invert_image(Image& current_image)
 {
-
+    for (int x = 0; x < current_image.width; x++)
+    {
+        for (int y = 0; y < current_image.height; y++)
+        {
+            for (int c = 0; c < 3; c++)
+            { // c++ lol
+                current_image(x, y, c) = 255 - current_image(x, y, c);
+            }
+        }
+    }
+    cout << "Inversion Filter has successfully been applied.\n";
+}
+//************************************************************************************************************//
+//--------------------------------------------------abdelrahaman-----------------------------------------//
+void Grayscale_Conversion(Image& image)
+{
     for (int i = 0; i < image.width; i++)
     {
         for (int j = 0; j < image.height; j++)
@@ -136,7 +151,7 @@ void Grayscale_Conversion(Image &image)
         }
     }
 }
-void Flip_Image(int x, Image &image)
+void Flip_Image(int x, Image& image)
 {
     if (x == 1)
     {
@@ -146,7 +161,6 @@ void Flip_Image(int x, Image &image)
             {
                 for (int k = 0; k < image.channels; k++)
                 {
-
                     swap(image(j, i, k), image(image.width - 1 - j, i, k));
                 }
             }
@@ -166,25 +180,14 @@ void Flip_Image(int x, Image &image)
         }
     }
 }
-void invert_image(Image &current_image)
-{
-    for (int x = 0; x < current_image.width; x++)
-    {
-        for (int y = 0; y < current_image.height; y++)
-        {
-            for (int c = 0; c < 3; c++)
-            { // c++ lol
-                current_image(x, y, c) = 255 - current_image(x, y, c);
-            }
-        }
-    }
-    cout << "Inversion Filter has successfully been applied.\n";
-}
-void black_white(Image &current_image)
+
+//--------------------------------------------------------------------------------------------//
+//####################################omar####################################################//
+void black_white(Image& current_image)
 {
     cout << "===========\n"
-         << "filter: black and white\n"
-         << "===========\n";
+        << "filter: black and white\n"
+        << "===========\n";
     for (int i = 0; i < current_image.width; i++)
     {
         for (int j = 0; j < current_image.height; j++)
@@ -208,15 +211,15 @@ void black_white(Image &current_image)
     }
     cout << "Black and White filter applied successfully!\n";
 }
-void Rotate_Image(Image &current_image)
+void Rotate_Image(Image& current_image)
 {
     int choice;
     int w, h;
     w = current_image.width;
     h = current_image.height;
     cout << "===========\n"
-         << "filter: Rotate_Image \n"
-         << "===========\n";
+        << "filter: Rotate_Image \n"
+        << "===========\n";
     cout << "Please select the rotation angle :\n";
     cout << "enter [1] for rotate 90\n";
     cout << "enter [2] for rotate 180\n";
@@ -272,8 +275,8 @@ void Rotate_Image(Image &current_image)
         cout << "image roated 270 successfully\n";
     }
 }
-
-void apply_framefilter(Image &img)
+//===========================================yasin================================================//
+void apply_framefilter(Image& img)
 {
     int frametype;
     cout << "*---Choose Frame Type---* \n";
@@ -355,7 +358,7 @@ void apply_framefilter(Image &img)
     }
     cout << "Frame filter applied successfully!\n";
 }
-void apply_resize_image_filter(Image &img)
+void apply_resize_image_filter(Image& img)
 {
     int new_width, new_height;
     cout << "Enter New Width and Height: \n";
@@ -377,7 +380,7 @@ void apply_resize_image_filter(Image &img)
     img = new_img;
     cout << "Resize filter applied successfully!\n";
 }
-
+//================================================================================//
 int main()
 {
     Image current_image;
@@ -387,7 +390,6 @@ int main()
 
     while (true)
     {
-
         show_menu(); // menu function
         cin >> choice;
         if (choice == 0) // exit
@@ -398,8 +400,8 @@ int main()
         else if (choice == 1) // load
         {
             cout << "===========\n"
-                 << "load option\n"
-                 << "===========\n";
+                << "load option\n"
+                << "===========\n";
 
             cout << "enter name of image with extension" << "\n";
             cout << "supported format in this program : JPEG / JPG / PNG / BMP " << "\n";
@@ -414,62 +416,60 @@ int main()
                 cout << "failed to load image please try again\n";
             }
         }
-        else if (choice == 2) //
+        else if (choice == 2) // grayscale
         {
-
             Grayscale_Conversion(current_image);
         }
-
         else if (choice == 3) // black and white filter
         {
             black_white(current_image);
         }
-        if (choice == 5) // frame filter
+        else if (choice == 4) // Inversion Filter
+        {
+            invert_image(current_image);
+        }
+        else if (choice == 5) // frame filter
         {
             apply_framefilter(current_image);
         }
-        if (choice == 4)
-        { // Inversion Filter
-            invert_image(current_image);
-        }
-        else if (choice == 6)
+        else if (choice == 6) // flip image
         {
             int x;
             cout << "==========================================\n";
             cout << "if you want flip it Horizontally put 1\n"
-                 << "======================================" << "if you want flip it Vertically put 2\n"
-                 << "======================================";
+                << "======================================\n"
+                << "if you want flip it Vertically put 2\n"
+                << "======================================\n";
             cin >> x;
             Flip_Image(x, current_image);
-        };
-        if (choice == 7)
-        { // Apply the Darken/Lighten Filter
-            Darken_or_lighten_image(current_image);
         }
-        if (choice == 8) // resize filter
-        {
-            apply_resize_image_filter(current_image);
-        }
-
-        if (choice == 7) // rotate image
+        else if (choice == 7) // rotate image
         {
             Rotate_Image(current_image);
         }
-
-        if (choice == 10) // save
+        else if (choice == 8) // Apply the Darken/Lighten Filter
+        {
+            Darken_or_lighten_image(current_image);
+        }
+        else if (choice == 9) // resize filter
+        {
+            apply_resize_image_filter(current_image);
+        }
+        else if (choice == 10) // save
         {
             cout << "===========\n"
-                 << "save option\n"
-                 << "===========\n";
+                << "save option\n"
+                << "===========\n";
             save_image(current_image, file_name);
         }
         else if (choice == 11) // reset
         {
             cout << "===========\n"
-                 << "reset option\n"
-                 << "===========\n";
+                << "reset option\n"
+                << "===========\n";
             current_image = original_image;
             cout << "original image restored successfull\n";
         }
     }
+    return 0;
 }
