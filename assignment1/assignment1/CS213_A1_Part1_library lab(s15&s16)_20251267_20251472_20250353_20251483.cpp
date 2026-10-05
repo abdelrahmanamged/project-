@@ -35,6 +35,7 @@ void show_menu()
     cout << "======================================================\n";
     cout << "           Welcome to our Program          \n";
     cout << "======================================================\n";
+    cout << " [0]  Exit Program\n";
     cout << " [1]  Load Image\n";
     cout << " [2]  Apply Filter: Grayscale Conversion\n";
     cout << " [3]  Apply Filter: Black and White\n";
@@ -44,9 +45,16 @@ void show_menu()
     cout << " [7]  Apply Filter: Rotate Image (90 / 180 / 270)\n";
     cout << " [8]  Apply Filter: Darken and Lighten Image\n";
     cout << " [9]  Apply Filter: Resizing Image\n";
-    cout << " [10] Save Image\n";
-    cout << " [11] Reset Image to Original State\n";
-    cout << " [0]  Exit Program\n";
+    cout << " [10] Apply Filter: Merge Images\n";
+    cout << " [11] Apply Filter: sunlight\n";
+    cout << " [12] Apply Filter: Detect Image Edges\n";
+    cout << " [13] Apply Filter: old tv Image Filter\n";
+    cout << " [14] Apply Filter: Crop Images\n";
+    cout << " [15] Apply Filter: purple filter\n";
+    cout << " [16] Apply Filter: Blur Images\n";
+    cout << " [17] Apply Filter: Infrared Photography\n";
+    cout << " [18] Save Image\n";
+    cout << " [19] Reset Image to Original State\n";
     cout << "======================================================\n";
     cout << "Enter your choice: ";
 }
@@ -504,14 +512,47 @@ int main()
         {
             apply_resize_image_filter(current_image);
         }
-        else if (choice == 10) // save
+        else if (choice ==10 )
+        {
+
+        }
+        else if (choice == 11)
+        {
+
+        }
+        else if (choice == 12 )
+        {
+
+        }
+        else if (choice ==13 )
+        {
+
+        }
+        else if (choice ==14 )
+        {
+
+        }
+        else if (choice == 15)
+        {
+
+        }
+        else if (choice == 16)
+        {
+
+        }
+        else if (choice ==17 )
+        {
+
+        }
+  
+        else if (choice == 18) // save
         {
             cout << "===========\n"
                 << "Save Option\n"
                 << "===========\n";
             save_image(current_image, file_name);
         }
-        else if (choice == 11) // reset
+        else if (choice == 19) // reset
         {
             cout << "===========\n"
                 << "Reset Option\n"
