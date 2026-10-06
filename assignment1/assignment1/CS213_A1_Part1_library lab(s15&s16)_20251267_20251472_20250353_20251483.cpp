@@ -94,7 +94,7 @@ void save_image(Image& current_image, string& original_filename)
 }
 
 //************************************************************************************************************//
-// #################################### Hesham Waleed 20251472 ###################################//
+// #################################### Hesham Waleed 20251472 ###############################################//
 void Darken_or_lighten_image(Image& current_image)
 {
     cout << "Do you want to darken or lighten the image?\nEnter 0 to darken or 1 to lighten.\n";
@@ -118,9 +118,9 @@ void Darken_or_lighten_image(Image& current_image)
             {
                 for (int c = 0; c < 3; c++)
                 {
-                    current_image(x, y, c) *= (1 + level / 100.0);
-                    if (current_image(x, y, c) > 255)
-                        current_image(x, y, c) = 255;
+                    int temp = current_image(x, y, c) * (1 + level / 100.0); // use a temporary integer variable to avoid the overflow for the unsigned character.
+                    if (temp > 255) temp = 255;
+                    current_image(x, y, c) = temp;
                 }
             }
         }
@@ -144,9 +144,7 @@ void Darken_or_lighten_image(Image& current_image)
             {
                 for (int c = 0; c < 3; c++)
                 {
-                    current_image(x, y, c) *= (1 - level / 100.0);
-                    if (current_image(x, y, c) < 0)
-                        current_image(x, y, c) = 0;
+                    current_image(x, y, c) *= (1 - level / 100.0); // either way, it's never gonna be negative. A check would just be useless.
                 }
             }
         }
@@ -167,6 +165,58 @@ void invert_image(Image& current_image)
         }
     }
     cout << "Inversion Filter has successfully been applied.\n";
+}
+
+void crop_image(Image& current_image)
+{
+    int crop_x, crop_y, crop_width, crop_height;
+    cout << "Enter the point for the top-left corner of the region you want to crop. (Example: 155 4)\n";
+    while (true) { // Input loop for extra validation for X and Y.
+        cin >> crop_x >> crop_y;
+        if (crop_x >= 0 && crop_x <= current_image.width - 1 && crop_y >= 0 && crop_y <= current_image.height - 1) {
+            break;
+        }
+        cout << "Please enter a valid point. Both X and Y have to be non-negative numbers that are smaller than the width and the height of the original picture respectively.\n";
+    }
+    cout << "Enter the width and height (in pixels) for the region you want to crop. (Example: 20 5 will crop a 20x5 rectangle from the top-left corner you specified above)\n";
+    while (true) { // Input loop for extra validation for width and height
+        cin >> crop_width >> crop_height;
+        if ((crop_x + crop_width <= current_image.width) && (crop_y + crop_height <= current_image.height) && crop_width > 0 && crop_height > 0) { // original condition: (crop_x + crop_width - 1 <= current_image.width - 1) && (crop_y + crop_height - 1 <= current_image.height - 1) but this is just simplified.
+            break;
+        }
+        cout << "The cropped area dimensions can't exceed the original image's dimensions. The width and height can't be zero either. Please enter a valid width and height for the top-left corner you specified above.\n";
+    }
+
+    Image new_Image(crop_width, crop_height);
+
+    for (int i = 0; i < crop_width; i++) {
+        for (int j = 0; j < crop_height; j++) {
+            for (int c = 0; c < 3; c++) {
+                new_Image(i, j, c) = current_image(crop_x + i, crop_y + j, c);
+            }
+        }
+    }
+    current_image = new_Image;
+    cout << "The image has been cropped successfuly.\n";
+}
+
+void purple_image(Image& current_image)
+{
+    for (int x = 0; x < current_image.width; x++) {
+        for (int y = 0; y < current_image.height; y++) {
+            int r, g, b;
+            r = current_image(x, y, 0) * 1.1;      // Scale up the Red channel
+            g = current_image(x, y, 1) * 0.8;      // Scale down the Green channel
+            b = current_image(x, y, 2) * 1.2;      // Scale up the Blue channel.
+            if (r > 255) r = 255;
+            if (b > 255) b = 255;
+
+            current_image(x, y, 0) = r;
+            current_image(x, y, 1) = g;
+            current_image(x, y, 2) = b;
+        }
+    }
+    cout << "The purple filter has been applied successfully.\n";
 }
 
 //************************************************************************************************************//
@@ -528,13 +578,13 @@ int main()
         {
 
         }
-        else if (choice ==14 )
+        else if (choice == 14) // Apply the Crop filter
         {
-
+            crop_image(current_image);
         }
         else if (choice == 15)
         {
-
+            purple_image(current_image);
         }
         else if (choice == 16)
         {
