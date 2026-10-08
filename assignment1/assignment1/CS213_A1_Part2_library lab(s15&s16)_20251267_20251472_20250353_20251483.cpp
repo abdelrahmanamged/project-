@@ -650,6 +650,51 @@ void apply_resize_image_filter(Image& img)
     img = new_img;
     cout << "The Resize Filter has been applied successfully!\n";
 }
+void apply_Blur_image_filter(Image& img){
+    int kernel_size;
+    cout << "Enter the blur intensity level (odd number like 3,5,7,...):\n";
+    cin >> kernel_size;
+    Image temporary_img=img;
+    if (kernel_size <= 0 || kernel_size % 2 == 0){
+        cout << "kernel size error: please enter positive odd number\n ";
+    }else{
+    for (int i = 0; i < img.width; i++){
+        for (int j = 0; j < img.height; j++){
+            int red=0; int green=0; int blue=0;
+            int count=0;
+            for (int n = i-(kernel_size/2); n <= i+(kernel_size/2); n++)
+            {
+               for (int s = j-(kernel_size/2); s <= j+(kernel_size/2); s++)
+               {
+                if (n >=0 && n < img.width && s>=0 && s < img.height)
+                {
+                    count++;
+                    red += temporary_img(n,s,0);
+                    green += temporary_img(n,s,1);
+                    blue+= temporary_img(n,s,2);
+                }
+                
+               }  
+            }
+              img(i,j,0)=red/count;
+              img(i,j,1)=green/count;
+              img(i,j,2) =blue/count;
+        }   
+    }
+      cout << "Blur Image Filters has been applied sucssesfully\n";
+}
+}
+void apply_infrared_filter(Image& img){
+    for (int i = 0; i < img.width; i++){
+        for (int j = 0; j < img.height; j++){
+            img(i,j,0)=255;
+            img(i,j,1)=255-img(i,j,1);
+            img(i,j,2)=255-img(i,j,2);
+        }
+    }
+    cout << "Infrared filter has been applied sucessfully.\n";
+}
+
 
 //================================================================================//
 int main()
@@ -750,11 +795,11 @@ int main()
         {
             The_LandofWano(current_image);
         }
-        else if (choice == 12)
+        else if (choice == 12) // Apply detect image
         {
             Detect_Image_Edges(current_image);
         }
-        else if (choice == 13)
+        else if (choice == 13) // Apply old tv filter
         {
             old_tv_image(current_image);
         }
@@ -766,13 +811,13 @@ int main()
         {
             purple_image(current_image);
         }
-        else if (choice == 16)
+        else if (choice == 16) // Apply blur filter
         {
-
+            apply_Blur_image_filter(current_image);
         }
         else if (choice == 17)
         {
-
+            apply_infrared_filter(current_image); // Apply infrared filter
         }
 
         else if (choice == 18) // save
