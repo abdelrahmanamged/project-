@@ -51,11 +51,11 @@ void show_menu()
     cout << " [8]  Apply Filter: Darken and Lighten Image\n";
     cout << " [9]  Apply Filter: Resizing Image\n";
     cout << " [10] Apply Filter: Merge Images\n";
-    cout << " [11] Apply Filter: sunlight\n";
+    cout << " [11] Apply Filter: Wano-like Sunlight\n";
     cout << " [12] Apply Filter: Detect Image Edges\n";
-    cout << " [13] Apply Filter: old tv Image Filter\n";
+    cout << " [13] Apply Filter: Den Den Mushi TV Image Filter\n";
     cout << " [14] Apply Filter: Crop Images\n";
-    cout << " [15] Apply Filter: purple filter\n";
+    cout << " [15] Apply Filter: Purple Filter\n";
     cout << " [16] Apply Filter: Blur Images\n";
     cout << " [17] Apply Filter: Infrared Photography\n";
     cout << " [18] Save Image\n";
