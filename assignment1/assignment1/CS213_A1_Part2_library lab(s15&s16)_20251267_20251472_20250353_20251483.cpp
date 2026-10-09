@@ -66,37 +66,37 @@ void show_menu()
 
 void save_image(Image& current_image, string& original_filename)
 {
-    cout << "If you want to save the image in same image, enter 1" << "\n";
-    cout << "If you want to save the image as a new image, enter 2\n";
+    cout << "If you want to save the changes in the same image (that will modify your image), enter 1" << "\n";
+    cout << "If you want to save the changes in a new image (that will make a copy while preserving your original image), enter 2\n";
     int choice;
-    cout << "Enter your choice" << "\n";
+    cout << "Enter your choice\n";
     cin >> choice;
     if (choice == 1)
     {
         if (current_image.saveImage(original_filename))
         {
-            cout << "Image saved successfully to " << original_filename << "\n";
+            cout << "The image has been saved successfully to " << original_filename << "\n";
         }
         else
         {
-            cout << "Image failed to save to " << original_filename << ". Please try again.\n";
+            cout << "Failed to save " << original_filename << ". Please try again.\n";
         }
     }
     if (choice == 2)
     {
         string new_filename;
-        cout << "Enter the name of the new file." << "\n";
-        cout << "Supported formats by this program are: jpeg / jpg / png / bmp " << "\n";
+        cout << "Enter the name you want for the new image including the extension. (Example: imagename.png)" << "\n";
+        cout << "Supported formats by this program are: jpeg / jpg / png / bmp" << "\n";
 
         cin >> new_filename;
 
         if (current_image.saveImage(new_filename))
         {
-            cout << "Image saved successfully to " << new_filename << ".\n";
+            cout << "Image has been saved successfully to " << new_filename << ".\n";
         }
         else
         {
-            cout << "Image failed to save to " << new_filename << ". Please try again." << "\n";
+            cout << "Failed to save " << new_filename << ". Please try again." << "\n";
         }
     }
 }
@@ -247,7 +247,7 @@ void Grayscale_Conversion(Image& image)
             }
         }
     }
-    cout << "Grayscale Conversion filter applied successfully.\n";
+    cout << "Grayscale Conversion filter has been applied successfully.\n";
 }
 
 void Flip_Image(int x, Image& image)
@@ -344,7 +344,7 @@ void The_LandofWano(Image& current_image)
             }
         }
     }
-    cout << "The filter has been applied successfully." << "\n";
+    cout << "The filter has been applied successfully.\n";
 }
 
 
@@ -376,7 +376,7 @@ void black_white(Image& current_image)
             }
         }
     }
-    cout << "Black and White filter has been applied successfully.\n";
+    cout << "The Black-and-White filter has been applied successfully.\n";
 }
 
 void Rotate_Image(Image& current_image)
@@ -389,9 +389,9 @@ void Rotate_Image(Image& current_image)
         << "Filter: Rotate Image \n"
         << "=======================\n";
     cout << "Please select the rotation angle:\n";
-    cout << "Enter [1] for rotate 90 \n";
-    cout << "Enter [2] for rotate 180 \n";
-    cout << "Enter [3] for rotate 270 \n";
+    cout << "Enter [1] for a 90-degree rotation\n";
+    cout << "Enter [2] for a 180-degree rotation \n";
+    cout << "Enter [3] for a 270-degree rotation \n";
     cout << "Enter your choice: ";
     cin >> choice;
     if (choice == 1)
@@ -499,16 +499,16 @@ void Detect_Image_Edges(Image& current_image)
     }
     current_image = new_image;
     cout << "=======================================================\n"
-        << "Filter: Detect Image Edgeshas been done successfully.\n"
+        << "Filter: Detect Image Edges has been applied successfully.\n"
         << "=======================================================\n";
 
 }
 void old_tv_image(Image& current_image)
 
 {
-    cout << "=======================\n"
-        << "Filter: old tv image \n"
-        << "=======================\n";
+    cout << "======================================\n"
+        << "Filter: Old Den Den Mushi Televisions\n"
+        << "======================================\n";
     for (int i = 0; i < current_image.width; i++)
     {
         for (int j = 0; j < current_image.height; j++)
@@ -536,9 +536,9 @@ void old_tv_image(Image& current_image)
 
     }
 
-    cout << "=======================================================\n"
-        << "filter: old tv image has been done successfully.\n"
-        << "=======================================================\n";
+    cout << "====================================================================\n"
+        << "Filter: The Old Den Den Mushi Filter has been applied successfully.\n"
+        << "====================================================================\n";
 }
 
 //************************************************************************************************************//
@@ -584,7 +584,7 @@ void apply_framefilter(Image& img)
         cout << "*---Choose pattern type:---* \n";
         cout << "1. Checkers / Squares patterns. \n";
         cout << "2. Diamond pattern. \n";
-        cout << "Enter choice: ";
+        cout << "Enter your choice: ";
         cin >> pattern_type;
         int diamond_size = 20;
 
@@ -631,7 +631,7 @@ void apply_framefilter(Image& img)
 void apply_resize_image_filter(Image& img)
 {
     int new_width, new_height;
-    cout << "Enter New Width and Height: ";
+    cout << "Enter the new width and height: ";
     cin >> new_width >> new_height;
     Image new_img(new_width, new_height);
     double x_ratio = (double)img.width / new_width;
@@ -652,11 +652,11 @@ void apply_resize_image_filter(Image& img)
 }
 void apply_Blur_image_filter(Image& img){
     int kernel_size;
-    cout << "Enter the blur intensity level (odd number like 3,5,7,...):\n";
+    cout << "Enter the blur intensity level (It must be an odd number like 3,5,7,...):\n";
     cin >> kernel_size;
     Image temporary_img=img;
     if (kernel_size <= 0 || kernel_size % 2 == 0){
-        cout << "kernel size error: please enter positive odd number\n ";
+        cout << "Kernel Size Error: please enter a positive odd number.\n ";
     }else{
     for (int i = 0; i < img.width; i++){
         for (int j = 0; j < img.height; j++){
@@ -681,7 +681,7 @@ void apply_Blur_image_filter(Image& img){
               img(i,j,2) =blue/count;
         }   
     }
-      cout << "Blur Image Filters has been applied sucssesfully\n";
+      cout << "The Blur Image Filter has been applied sucssesfully.\n";
 }
 }
 void apply_infrared_filter(Image& img){
@@ -692,7 +692,7 @@ void apply_infrared_filter(Image& img){
             img(i,j,2)=255-img(i,j,2);
         }
     }
-    cout << "Infrared filter has been applied sucessfully.\n";
+    cout << "The Infrared Filter has been applied sucessfully.\n";
 }
 
 
@@ -774,21 +774,21 @@ int main()
         }
         else if (choice == 10) // merge
         {
-            cout << "load second image" << "\n";
+            cout << "Enter the name of the second image to load including its extension. (Example: image.png): " << "\n";
             Image second;
             string name;
             cin >> name;
             bool x = true;
             if (second.loadNewImage(name) == x)
             {
-                cout << "================================";
-                cout << "second image loaded successfully.";
-                cout << "================================" << "\n";
+                cout << "==============================================";
+                cout << "The second image has been loaded successfully.";
+                cout << "==============================================" << "\n";
                 merge_image(current_image, second);
             }
             else
             {
-                cout << "second image has not been loaded successfully.";
+                cout << "Failed to load the second image.";
             }
         }
         else if (choice == 11) // land wano or sunlight

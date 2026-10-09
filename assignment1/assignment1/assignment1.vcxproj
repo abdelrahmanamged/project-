@@ -139,12 +139,12 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="assignment1.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Image_Class.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CS213_A1_Part1_library lab(s15&amp;s16)_20251267_20251472_20250353_20251483.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

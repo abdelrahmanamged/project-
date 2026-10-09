@@ -1,2 +1,9 @@
-﻿  assignment1.cpp
-  assignment1.vcxproj -> C:\Users\LOQ\faculty of compuiting and ai\programing\My-Github-projects\project-\assignment1\x64\Debug\assignment1.exe
+﻿  CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(121,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(147,50): warning C4244: '*=': conversion from 'double' to 'unsigned char', possible loss of data
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(208,40): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(209,40): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(210,40): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(478,23): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\c 2 d\project\project-\assignment1\assignment1\CS213_A1_Part1_library lab(s15&s16)_20251267_20251472_20250353_20251483.cpp(479,23): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  assignment1.vcxproj -> C:\Users\c 2 d\project\project-\assignment1\x64\Debug\assignment1.exe
