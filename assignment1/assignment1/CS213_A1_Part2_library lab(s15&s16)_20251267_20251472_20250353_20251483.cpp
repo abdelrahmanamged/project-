@@ -14,11 +14,11 @@ Team Details:
 --------------------------------------------------------------------------------------------------------------------------------
  1. Omar Ayman Mohamed        20251267       Library Lab (S15, S16)            Filter 2 and Filter 6 Filter 10 and Filter 14 and menu
 
- 2. Abdelrahman Amgd Mosad    20250353       Library Lab (S15, S16)            Filter 1 and Filter 5 Filter 9 and Filter 13 
+ 2. Abdelrahman Amgd Mosad    20250353       Library Lab (S15, S16)            Filter 1 and Filter 5 Filter 9 and Filter 13
 
- 3. Yassine Awadallah Bakry   20251483       Library Lab (S15, S16)            Filter 4 and Filter 8 Filter 12 and Filter 16 
+ 3. Yassine Awadallah Bakry   20251483       Library Lab (S15, S16)            Filter 4 and Filter 8 Filter 12 and Filter 16
 
- 4. Hesham Waleed Fawzi       20251472       Library Lab (S15, S16)            Filter 3 and Filter 7 Filter 11 and Filter 15 
+ 4. Hesham Waleed Fawzi       20251472       Library Lab (S15, S16)            Filter 3 and Filter 7 Filter 11 and Filter 15
 
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void show_menu()
     cout << "Enter your choice: ";
 }
 
-void save_image(Image& current_image, string& original_filename)
+void save_image(Image &current_image, string &original_filename)
 {
     cout << "If you want to save the changes in the same image (that will modify your image), enter 1" << "\n";
     cout << "If you want to save the changes in a new image (that will make a copy while preserving your original image), enter 2\n";
@@ -103,7 +103,7 @@ void save_image(Image& current_image, string& original_filename)
 
 //************************************************************************************************************//
 // #################################### Hesham Waleed 20251472 ###############################################//
-void Darken_or_lighten_image(Image& current_image)
+void Darken_or_lighten_image(Image &current_image)
 {
     cout << "Do you want to darken or lighten the image?\nEnter 0 to darken or 1 to lighten.\n";
     bool dark_or_light_choice = 0;
@@ -127,7 +127,8 @@ void Darken_or_lighten_image(Image& current_image)
                 for (int c = 0; c < 3; c++)
                 {
                     int temp = current_image(x, y, c) * (1 + level / 100.0); // use a temporary integer variable to avoid the overflow for the unsigned character.
-                    if (temp > 255) temp = 255;
+                    if (temp > 255)
+                        temp = 255;
                     current_image(x, y, c) = temp;
                 }
             }
@@ -160,7 +161,7 @@ void Darken_or_lighten_image(Image& current_image)
     }
 }
 
-void invert_image(Image& current_image)
+void invert_image(Image &current_image)
 {
     for (int x = 0; x < current_image.width; x++)
     {
@@ -175,21 +176,25 @@ void invert_image(Image& current_image)
     cout << "Inversion Filter has successfully been applied.\n";
 }
 
-void crop_image(Image& current_image)
+void crop_image(Image &current_image)
 {
     int crop_x, crop_y, crop_width, crop_height;
     cout << "Enter the point for the top-left corner of the region you want to crop. (Example: 155 4)\n";
-    while (true) { // Input loop for extra validation for X and Y.
+    while (true)
+    { // Input loop for extra validation for X and Y.
         cin >> crop_x >> crop_y;
-        if (crop_x >= 0 && crop_x <= current_image.width - 1 && crop_y >= 0 && crop_y <= current_image.height - 1) {
+        if (crop_x >= 0 && crop_x <= current_image.width - 1 && crop_y >= 0 && crop_y <= current_image.height - 1)
+        {
             break;
         }
         cout << "Please enter a valid point. Both X and Y have to be non-negative numbers that are smaller than the width and the height of the original picture respectively.\n";
     }
     cout << "Enter the width and height (in pixels) for the region you want to crop. (Example: 20 5 will crop a 20x5 rectangle from the top-left corner you specified above)\n";
-    while (true) { // Input loop for extra validation for width and height
+    while (true)
+    { // Input loop for extra validation for width and height
         cin >> crop_width >> crop_height;
-        if ((crop_x + crop_width <= current_image.width) && (crop_y + crop_height <= current_image.height) && crop_width > 0 && crop_height > 0) { // original condition: (crop_x + crop_width - 1 <= current_image.width - 1) && (crop_y + crop_height - 1 <= current_image.height - 1) but this is just simplified.
+        if ((crop_x + crop_width <= current_image.width) && (crop_y + crop_height <= current_image.height) && crop_width > 0 && crop_height > 0)
+        { // original condition: (crop_x + crop_width - 1 <= current_image.width - 1) && (crop_y + crop_height - 1 <= current_image.height - 1) but this is just simplified.
             break;
         }
         cout << "The cropped area dimensions can't exceed the original image's dimensions. The width and height can't be zero either. Please enter a valid width and height for the top-left corner you specified above.\n";
@@ -197,9 +202,12 @@ void crop_image(Image& current_image)
 
     Image new_Image(crop_width, crop_height);
 
-    for (int i = 0; i < crop_width; i++) {
-        for (int j = 0; j < crop_height; j++) {
-            for (int c = 0; c < 3; c++) {
+    for (int i = 0; i < crop_width; i++)
+    {
+        for (int j = 0; j < crop_height; j++)
+        {
+            for (int c = 0; c < 3; c++)
+            {
                 new_Image(i, j, c) = current_image(crop_x + i, crop_y + j, c);
             }
         }
@@ -208,16 +216,20 @@ void crop_image(Image& current_image)
     cout << "The image has been cropped successfuly.\n";
 }
 
-void purple_image(Image& current_image)
+void purple_image(Image &current_image)
 {
-    for (int x = 0; x < current_image.width; x++) {
-        for (int y = 0; y < current_image.height; y++) {
+    for (int x = 0; x < current_image.width; x++)
+    {
+        for (int y = 0; y < current_image.height; y++)
+        {
             int r, g, b;
-            r = current_image(x, y, 0) * 1.1;      // Scale up the Red channel
-            g = current_image(x, y, 1) * 0.8;      // Scale down the Green channel
-            b = current_image(x, y, 2) * 1.2;      // Scale up the Blue channel.
-            if (r > 255) r = 255;
-            if (b > 255) b = 255;
+            r = current_image(x, y, 0) * 1.1; // Scale up the Red channel
+            g = current_image(x, y, 1) * 0.8; // Scale down the Green channel
+            b = current_image(x, y, 2) * 1.2; // Scale up the Blue channel.
+            if (r > 255)
+                r = 255;
+            if (b > 255)
+                b = 255;
 
             current_image(x, y, 0) = r;
             current_image(x, y, 1) = g;
@@ -229,7 +241,7 @@ void purple_image(Image& current_image)
 
 //************************************************************************************************************//
 // #################################### Abdelrahman Amgd 20250353 #############################################//
-void Grayscale_Conversion(Image& image)
+void Grayscale_Conversion(Image &image)
 {
     for (int i = 0; i < image.width; i++)
     {
@@ -250,7 +262,7 @@ void Grayscale_Conversion(Image& image)
     cout << "Grayscale Conversion filter has been applied successfully.\n";
 }
 
-void Flip_Image(int x, Image& image)
+void Flip_Image(int x, Image &image)
 {
     if (x == 1)
     {
@@ -281,43 +293,79 @@ void Flip_Image(int x, Image& image)
         cout << "The image has been flipped vertically successfully.\n";
     }
 }
-void merge_image(Image& current_image, Image& second)
+void merge_image(Image &current_image, Image &second)
 {
-    int w = min(current_image.width, second.width);
-    int h = min(current_image.height, second.height);
-    Image result(w, h);
-    for (int i = 0; i < w; i++)
+    int x;
+    cout << "===========================================================\n";
+    cout << "Enter 0 to resize both images to the biggest size and merge\n";
+    cout << "===========================================================\n";
+    cout << "Enter 1 to merge the common (smaller) area only\n";
+    cout << "===========================================================\n";
+    cout << "Enter your choice: ";
+    cin >> x;
+    if (x == 0)
     {
-        int avg1 = 0, avg2 = 0, avg3 = 0;
-        for (int j = 0; j < h; j++)
+        int w = max(current_image.width, second.width);
+        int h = max(current_image.height, second.height);
+        Image result(w, h);
+        for (int i = 0; i < w; i++)
         {
-            int red1, red2, blue1, blue2, green1, green2;
-            for (int k = 0; k < 3; k++)
+            for (int j = 0; j < h; j++)
             {
-                red1 = current_image(i, j, 0);
-                green1 = current_image(i, j, 1);
-                blue1 = current_image(i, j, 2);
-            }
-            for (int k = 0; k < 3; k++)
-            {
-                red2 = second(i, j, 0);
-                green2 = second(i, j, 1);
-                blue2 = second(i, j, 2);
-            }
-            avg1 = (red1 + red2) / 2;
-            avg2 = (green1 + green2) / 2;
-            avg3 = (blue1 + blue2) / 2;
-            for (int k = 0; k < 3; k++)
-            {
-                result(i, j, 0) = avg1;
-                result(i, j, 1) = avg2;
-                result(i, j, 2) = avg3;
+                int x1, x2, y1, y2;
+                x1 = (i * current_image.width) / w;
+                y1 = (j * current_image.height) / h;
+                x2 = (i * second.width) / w;
+                y2 = (j * second.height) / h;
+
+                for (int k = 0; k < 3; k++)
+                {
+                    result(i, j, k) = (current_image(x1, y1, k) + second(x2, y2, k)) / 2;
+                }
             }
         }
+
+        current_image = result;
     }
-    current_image = result;
+
+    else if (x == 1)
+    {
+        int w = min(current_image.width, second.width);
+        int h = min(current_image.height, second.height);
+        Image result(w, h);
+        for (int i = 0; i < w; i++)
+        {
+            int avg1 = 0, avg2 = 0, avg3 = 0;
+            for (int j = 0; j < h; j++)
+            {
+                int red1, red2, blue1, blue2, green1, green2;
+                for (int k = 0; k < 3; k++)
+                {
+                    red1 = current_image(i, j, 0);
+                    green1 = current_image(i, j, 1);
+                    blue1 = current_image(i, j, 2);
+                }
+                for (int k = 0; k < 3; k++)
+                {
+                    red2 = second(i, j, 0);
+                    green2 = second(i, j, 1);
+                    blue2 = second(i, j, 2);
+                }
+                avg1 = (red1 + red2) / 2;
+                avg2 = (green1 + green2) / 2;
+                avg3 = (blue1 + blue2) / 2;
+                for (int k = 0; k < 3; k++)
+                {
+                    result(i, j, 0) = avg1;
+                    result(i, j, 1) = avg2;
+                    result(i, j, 2) = avg3;cd cdlb
+                }
+            }
+        }
+        current_image = result;
+    }
 };
-void The_LandofWano(Image& current_image)
+void The_LandofWano(Image &current_image)
 {
     for (int i = 0; i < current_image.width; i++)
     {
@@ -347,14 +395,13 @@ void The_LandofWano(Image& current_image)
     cout << "The filter has been applied successfully.\n";
 }
 
-
 //--------------------------------------------------------------------------------------------//
 // #################################### Omar Ayman 20251267 ###################################//
-void black_white(Image& current_image)
+void black_white(Image &current_image)
 {
     cout << "=======================\n"
-        << "Filter: Black and White\n"
-        << "=======================\n";
+         << "Filter: Black and White\n"
+         << "=======================\n";
     for (int i = 0; i < current_image.width; i++)
     {
         for (int j = 0; j < current_image.height; j++)
@@ -379,15 +426,15 @@ void black_white(Image& current_image)
     cout << "The Black-and-White filter has been applied successfully.\n";
 }
 
-void Rotate_Image(Image& current_image)
+void Rotate_Image(Image &current_image)
 {
     int choice;
     int w, h;
     w = current_image.width;
     h = current_image.height;
     cout << "=======================\n"
-        << "Filter: Rotate Image \n"
-        << "=======================\n";
+         << "Filter: Rotate Image \n"
+         << "=======================\n";
     cout << "Please select the rotation angle:\n";
     cout << "Enter [1] for a 90-degree rotation\n";
     cout << "Enter [2] for a 180-degree rotation \n";
@@ -409,8 +456,8 @@ void Rotate_Image(Image& current_image)
         }
         current_image = rotated_image;
         cout << "=======================================================\n"
-            << "The image has been rotated by 90 degrees successfully.\n"
-            << "=======================================================\n";
+             << "The image has been rotated by 90 degrees successfully.\n"
+             << "=======================================================\n";
     }
     else if (choice == 2)
     {
@@ -427,8 +474,8 @@ void Rotate_Image(Image& current_image)
         }
         current_image = rotated_image;
         cout << "=======================================================\n"
-            << "The image has been rotated by 180 degrees successfully.\n"
-            << "=======================================================\n";
+             << "The image has been rotated by 180 degrees successfully.\n"
+             << "=======================================================\n";
     }
     else if (choice == 3)
     {
@@ -445,17 +492,17 @@ void Rotate_Image(Image& current_image)
         }
         current_image = rotated_image;
         cout << "=======================================================\n"
-            << "The image has been rotated by 270 degrees successfully.\n"
-            << "=======================================================\n";
+             << "The image has been rotated by 270 degrees successfully.\n"
+             << "=======================================================\n";
     }
 }
-void Detect_Image_Edges(Image& current_image)
+void Detect_Image_Edges(Image &current_image)
 {
     cout << "=======================\n"
-        << "Filter: Detect_Image_Edges \n"
-        << "=======================\n";
+         << "Filter: Detect_Image_Edges \n"
+         << "=======================\n";
     Image new_image(current_image.width, current_image.height);
-    int identifier = 40; //Threshold
+    int identifier = 40; // Threshold
     // Convert to grayscale to remove colors and make edges easy to find.
 
     for (int i = 0; i < current_image.width; i++)
@@ -470,21 +517,20 @@ void Detect_Image_Edges(Image& current_image)
         }
     }
 
-
-    for (int i = 0; i < current_image.width - 1; i++) //to avoid bpoundries
+    for (int i = 0; i < current_image.width - 1; i++) // to avoid bpoundries
     {
-        for (int j = 0; j < current_image.height - 1; j++) //to avoid bpoundries
+        for (int j = 0; j < current_image.height - 1; j++) // to avoid bpoundries
         {
-            int  current_brightness = (current_image(i, j, 0) + current_image(i, j, 1) + current_image(i, j, 2)) / 3;    //level of brightness
-            int  right_brightness = (current_image(i + 1, j, 0) + current_image(i + 1, j, 1) + current_image(i + 1, j, 2)) / 3; //level of brightness
-            int  bottom_brightness = (current_image(i, j + 1, 0) + current_image(i, j + 1, 1) + current_image(i, j + 1, 2)) / 3;  //level of brightness
-            int difference_x = abs(current_brightness - right_brightness); // compare brightness of current pixel and right pixel
-            int difference_y = abs(current_brightness - bottom_brightness);// compare brightness of current pixel and bottom pixel
+            int current_brightness = (current_image(i, j, 0) + current_image(i, j, 1) + current_image(i, j, 2)) / 3;            // level of brightness
+            int right_brightness = (current_image(i + 1, j, 0) + current_image(i + 1, j, 1) + current_image(i + 1, j, 2)) / 3;  // level of brightness
+            int bottom_brightness = (current_image(i, j + 1, 0) + current_image(i, j + 1, 1) + current_image(i, j + 1, 2)) / 3; // level of brightness
+            int difference_x = abs(current_brightness - right_brightness);                                                      // compare brightness of current pixel and right pixel
+            int difference_y = abs(current_brightness - bottom_brightness);                                                     // compare brightness of current pixel and bottom pixel
             int identifier1 = difference_x + difference_y;
             int final_color;
-            if (identifier1 >= identifier) //identify pixel is edge or not
+            if (identifier1 >= identifier) // identify pixel is edge or not
             {
-                final_color = 0;  // will execute it if it is edge
+                final_color = 0; // will execute it if it is edge
             }
             else
             {
@@ -494,21 +540,19 @@ void Detect_Image_Edges(Image& current_image)
             {
                 new_image(i, j, c) = final_color;
             }
-
         }
     }
     current_image = new_image;
     cout << "=======================================================\n"
-        << "Filter: Detect Image Edges has been applied successfully.\n"
-        << "=======================================================\n";
-
+         << "Filter: Detect Image Edges has been applied successfully.\n"
+         << "=======================================================\n";
 }
-void old_tv_image(Image& current_image)
+void old_tv_image(Image &current_image)
 
 {
     cout << "======================================\n"
-        << "Filter: Old Den Den Mushi Televisions\n"
-        << "======================================\n";
+         << "Filter: Old Den Den Mushi Televisions\n"
+         << "======================================\n";
     for (int i = 0; i < current_image.width; i++)
     {
         for (int j = 0; j < current_image.height; j++)
@@ -525,25 +569,23 @@ void old_tv_image(Image& current_image)
                     value *= 0.4; // darken even rows by 60%
                 }
                 value += noise; // add the random noise to value of pixel to add noise to the pixels
-                if (value > 255) value = 255; //check point to protect the value from overflow
-                if (value < 0) value = 0; //check point to protect the value from underflow
+                if (value > 255)
+                    value = 255; // check point to protect the value from overflow
+                if (value < 0)
+                    value = 0; // check point to protect the value from underflow
                 current_image(i, j, c) = value;
-
             }
-
-
         }
-
     }
 
     cout << "====================================================================\n"
-        << "Filter: The Old Den Den Mushi Filter has been applied successfully.\n"
-        << "====================================================================\n";
+         << "Filter: The Old Den Den Mushi Filter has been applied successfully.\n"
+         << "====================================================================\n";
 }
 
 //************************************************************************************************************//
 // ########################################## Yassine Bakry 20251483 ##########################################//
-void apply_framefilter(Image& img)
+void apply_framefilter(Image &img)
 {
     int frametype;
     cout << "*---Choose Frame Type---* \n";
@@ -628,7 +670,7 @@ void apply_framefilter(Image& img)
     cout << "The Frame filter has been applied successfully!\n";
 }
 
-void apply_resize_image_filter(Image& img)
+void apply_resize_image_filter(Image &img)
 {
     int new_width, new_height;
     cout << "Enter the new width and height: ";
@@ -650,51 +692,60 @@ void apply_resize_image_filter(Image& img)
     img = new_img;
     cout << "The Resize Filter has been applied successfully!\n";
 }
-void apply_Blur_image_filter(Image& img){
+void apply_Blur_image_filter(Image &img)
+{
     int kernel_size;
     cout << "Enter the blur intensity level (It must be an odd number like 3,5,7,...):\n";
     cin >> kernel_size;
-    Image temporary_img=img;
-    if (kernel_size <= 0 || kernel_size % 2 == 0){
+    Image temporary_img = img;
+    if (kernel_size <= 0 || kernel_size % 2 == 0)
+    {
         cout << "Kernel Size Error: please enter a positive odd number.\n ";
-    }else{
-    for (int i = 0; i < img.width; i++){
-        for (int j = 0; j < img.height; j++){
-            int red=0; int green=0; int blue=0;
-            int count=0;
-            for (int n = i-(kernel_size/2); n <= i+(kernel_size/2); n++)
-            {
-               for (int s = j-(kernel_size/2); s <= j+(kernel_size/2); s++)
-               {
-                if (n >=0 && n < img.width && s>=0 && s < img.height)
-                {
-                    count++;
-                    red += temporary_img(n,s,0);
-                    green += temporary_img(n,s,1);
-                    blue+= temporary_img(n,s,2);
-                }
-                
-               }  
-            }
-              img(i,j,0)=red/count;
-              img(i,j,1)=green/count;
-              img(i,j,2) =blue/count;
-        }   
     }
-      cout << "The Blur Image Filter has been applied sucssesfully.\n";
+    else
+    {
+        for (int i = 0; i < img.width; i++)
+        {
+            for (int j = 0; j < img.height; j++)
+            {
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+                int count = 0;
+                for (int n = i - (kernel_size / 2); n <= i + (kernel_size / 2); n++)
+                {
+                    for (int s = j - (kernel_size / 2); s <= j + (kernel_size / 2); s++)
+                    {
+                        if (n >= 0 && n < img.width && s >= 0 && s < img.height)
+                        {
+                            count++;
+                            red += temporary_img(n, s, 0);
+                            green += temporary_img(n, s, 1);
+                            blue += temporary_img(n, s, 2);
+                        }
+                    }
+                }
+                img(i, j, 0) = red / count;
+                img(i, j, 1) = green / count;
+                img(i, j, 2) = blue / count;
+            }
+        }
+        cout << "The Blur Image Filter has been applied sucssesfully.\n";
+    }
 }
-}
-void apply_infrared_filter(Image& img){
-    for (int i = 0; i < img.width; i++){
-        for (int j = 0; j < img.height; j++){
-            img(i,j,0)=255;
-            img(i,j,1)=255-img(i,j,1);
-            img(i,j,2)=255-img(i,j,2);
+void apply_infrared_filter(Image &img)
+{
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++)
+        {
+            img(i, j, 0) = 255;
+            img(i, j, 1) = 255 - img(i, j, 1);
+            img(i, j, 2) = 255 - img(i, j, 2);
         }
     }
     cout << "The Infrared Filter has been applied sucessfully.\n";
 }
-
 
 //================================================================================//
 int main()
@@ -716,8 +767,8 @@ int main()
         else if (choice == 1) // load
         {
             cout << "===========\n"
-                << "Load Option\n"
-                << "===========\n";
+                 << "Load Option\n"
+                 << "===========\n";
 
             cout << "Enter the name of image including its extension (Example: image.jpg)" << "\n";
             cout << "Supported formats by this program are: jpeg / jpg / png / bmp " << "\n";
@@ -753,9 +804,9 @@ int main()
             int x;
             cout << "======================================\n";
             cout << "If you want flip it horizontally, put 1\n"
-                << "======================================\n"
-                << "If you want flip it vertically, put 2\n"
-                << "======================================\n";
+                 << "======================================\n"
+                 << "If you want flip it vertically, put 2\n"
+                 << "======================================\n";
             cout << "Enter your choice: ";
             cin >> x;
             Flip_Image(x, current_image);
@@ -807,7 +858,7 @@ int main()
         {
             crop_image(current_image);
         }
-        else if (choice == 15) //Apply the purple filter
+        else if (choice == 15) // Apply the purple filter
         {
             purple_image(current_image);
         }
@@ -823,15 +874,15 @@ int main()
         else if (choice == 18) // save
         {
             cout << "===========\n"
-                << "Save Option\n"
-                << "===========\n";
+                 << "Save Option\n"
+                 << "===========\n";
             save_image(current_image, file_name);
         }
         else if (choice == 19) // reset
         {
             cout << "===========\n"
-                << "Reset Option\n"
-                << "===========\n";
+                 << "Reset Option\n"
+                 << "===========\n";
             current_image = original_image;
             cout << "The original image has been restored successfully.\n";
         }
