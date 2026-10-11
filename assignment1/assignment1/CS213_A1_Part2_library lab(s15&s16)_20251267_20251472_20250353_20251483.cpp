@@ -18,7 +18,7 @@ Team Details:
 
  3. Yassine Awadallah Bakry   20251483       Library Lab (S15, S16)            Filter 4 and Filter 8 Filter 12 and Filter 16
 
- 4. Hesham Waleed Fawzi       20251472       Library Lab (S15, S16)            Filter 3 and Filter 7 Filter 11 and Filter 15
+ 4. Hesham Waleed Fawzi       20251472       Library Lab (S17, S18)            Filter 3 and Filter 7 Filter 11 and Filter 15
 
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -358,7 +358,7 @@ void merge_image(Image &current_image, Image &second)
                 {
                     result(i, j, 0) = avg1;
                     result(i, j, 1) = avg2;
-                    result(i, j, 2) = avg3;cd cdlb
+                    result(i, j, 2) = avg3;
                 }
             }
         }
@@ -593,14 +593,27 @@ void apply_framefilter(Image &img)
     cout << "2. Fancy Frame. \n";
     cout << "Enter choice: ";
     cin >> frametype;
+    if (frametype!=1 && frametype!=2) //validtation for make sure that user enter valid frame type.
+    {
+      cout << "Invalid Frame Type Please enter valid frame type.\n";
+    }else{
     int frame_size;
     cout << "Enter Frame Size: ";
     cin >> frame_size;
+    if (frame_size <=0 || frame_size*2>img.width||frame_size*2>img.height) // validtation for make sure that user enter valid frame size.
+    {
+      cout << "Invalid frame size please enter valid frame size. \n";
+    }
+    else{
     if (frametype == 1)
     {
         int r, g, b;
         cout << "Enter Frame Color (R G B values from 0 to 255) (Example: Enter 0 0 0 for Black): ";
         cin >> r >> g >> b;
+        //RGB clamping:ensure users entered color values are in valid range (from 0 to 255)
+        if(r>255){r=255;} if(r<0){r=0;}  
+        if(g>255){g=255;}if(g<0){g=0;} 
+        if(b>255){b=255;}if(b<0){b=0;}
         for (int i = 0; i < img.width; i++)
         {
             for (int j = 0; j < img.height; j++)
@@ -619,17 +632,31 @@ void apply_framefilter(Image &img)
         int r1, g1, b1, r2, g2, b2;
         cout << "Enter the first color (Pattern) (R G B values from 0 to 255): ";
         cin >> r1 >> g1 >> b1;
+        //RGB clamping:ensure users entered color values are in valid range (from 0 to 255) 
+        if(r1>255){r1=255;} if(r1<0){r1=0;}
+        if(g1>255){g1=255;}if(g1<0){g1=0;}
+        if(b1>255){b1=255;}if(b1<0){b1=0;}
         cout << "Enter the second color (Background of Pattern) (R G B values from 0 to 255): ";
         cin >> r2 >> g2 >> b2;
-        int square_size = 20;
+        //RGB clamping:ensure users entered color values are in valid range (from 0 to 255) 
+        if(r2>255){r2=255;} if(r2<0){r2=0;}
+        if(g2>255){g2=255;}if(g2<0){g2=0;}
+        if(b2>255){b2=255;}if(b2<0){b2=0;}
+        
         int pattern_type;
         cout << "*---Choose pattern type:---* \n";
         cout << "1. Checkers / Squares patterns. \n";
         cout << "2. Diamond pattern. \n";
         cout << "Enter your choice: ";
         cin >> pattern_type;
+        if (pattern_type!=1 && pattern_type!=2) //validtation for make sure that user enter valid pattern type.
+        {
+          cout <<"Invalid pattern type please enter valid pattern type. \n";
+          return;
+        }
+        else{
         int diamond_size = 20;
-
+        int square_size = 20;
         for (int i = 0; i < img.width; i++)
         {
             for (int j = 0; j < img.height; j++)
@@ -666,15 +693,20 @@ void apply_framefilter(Image &img)
                 }
             }
         }
+        
     }
-    cout << "The Frame filter has been applied successfully!\n";
+  }
+  cout << "The Frame filter has been applied successfully!\n";
+}   
+    }
 }
+void apply_resize_filter(Image &img){
 
-void apply_resize_image_filter(Image &img)
-{
     int new_width, new_height;
     cout << "Enter the new width and height: ";
     cin >> new_width >> new_height;
+    // validation to ensure the dimensions are positive and prevent in valid image size.
+    if(new_width <=0 || new_height<=0){cout << "Invalid Dimensions! Please enter valid dimensions\n";return; }; 
     Image new_img(new_width, new_height);
     double x_ratio = (double)img.width / new_width;
     double y_ratio = (double)img.height / new_height;
@@ -692,18 +724,22 @@ void apply_resize_image_filter(Image &img)
     img = new_img;
     cout << "The Resize Filter has been applied successfully!\n";
 }
-void apply_Blur_image_filter(Image &img)
+
+
+
+void apply_Blur_image_filter(Image& img)
 {
     int kernel_size;
     cout << "Enter the blur intensity level (It must be an odd number like 3,5,7,...):\n";
     cin >> kernel_size;
-    Image temporary_img = img;
+   // validation to ensure kernel size is positive odd number. 
     if (kernel_size <= 0 || kernel_size % 2 == 0)
     {
         cout << "Kernel Size Error: please enter a positive odd number.\n ";
     }
     else
-    {
+    { 
+        Image temporary_img = img;
         for (int i = 0; i < img.width; i++)
         {
             for (int j = 0; j < img.height; j++)
@@ -821,7 +857,7 @@ int main()
         }
         else if (choice == 9) // resize filter
         {
-            apply_resize_image_filter(current_image);
+            apply_resize_filter(current_image);
         }
         else if (choice == 10) // merge
         {
